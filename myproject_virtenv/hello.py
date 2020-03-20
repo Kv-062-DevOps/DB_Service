@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request
+from flask import request,jsonify
 
 import boto3
 import json
@@ -68,6 +68,8 @@ def add_employee():
                'experience' : experience,
             }
     )
+    resp = jsonify(success=True)
+    return resp
            
 
     

@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request,jsonify
+from flask import request
 
 import boto3
 import json
@@ -38,7 +38,7 @@ def show_all_employees():
     return (yaml.dump(response['Items']))
 @app.route('/add', methods=['POST'])
 def add_employee():
-    req_data=yaml.load(request.data)
+    req_data=yaml.safe_load(request.data)
     #emp_id = req_data['emp_id']
     types = req_data['types']
     first_name = req_data['first_name']
@@ -68,11 +68,9 @@ def add_employee():
                'experience' : experience,
             }
     )
-    resp = jsonify(success=True)
-    return resp
-           
+    return emp_id_str
 
     
       
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8083)

@@ -8,7 +8,11 @@ import decimal
 import yaml
 from yaml import load, dump
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2', endpoint_url=os.environ['Db_url'])
+dynamodb = boto3.resource('dynamodb',
+                          aws_access_key_id="anything",
+                          aws_secret_access_key="anything",
+                          region_name=os.environ['Region'],
+                          endpoint_url=os.environ['Db_url'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)

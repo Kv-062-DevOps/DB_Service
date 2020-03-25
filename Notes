@@ -1,0 +1,5 @@
+1. Start DynamoDB image
+2. Start Init_create_DB image
+3. Start Init_load_DB image
+4. Start Db_service image
+ 

@@ -1,6 +1,6 @@
 FROM python:3.8.2
 
-ENV host_port=8083
+ENV host_port=8080
 WORKDIR /app
 
 COPY req.txt .

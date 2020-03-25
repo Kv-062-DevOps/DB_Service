@@ -1,13 +1,12 @@
 from flask import Flask
-from flask import request,jsonify
+from flask import request, jsonify
 
 import boto3
-import json
-import decimal
 import yaml
+import os
 from yaml import load, dump
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2', endpoint_url="http://localhost:8000")
+dynamodb = boto3.resource('dynamodb', region_name='us-east-2', endpoint_url="http://localhost:5000") #os.environ['db_url'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)
@@ -74,4 +73,4 @@ def add_employee():
     
       
 if __name__ == '__main__':
-    app.run(port=8083)
+    app.run(port="8083")#os.environ['host_port'])

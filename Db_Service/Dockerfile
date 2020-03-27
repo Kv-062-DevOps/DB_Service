@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.7-alpine
 ENV Service_port=8083
 ENV Region="local"
 COPY requirements.txt .

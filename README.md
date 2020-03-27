@@ -6,14 +6,14 @@ Get know container IP address:
 docker ps -l - container id
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' container_id
 (new terminal)
-2. Start Db_init 
+2. Start Db_init. First DB_init_create and second Db_init_load.
 docker build -t Image_Name .;
 Image_Name - create name for your image;
 docker run --name="Name" -e Db_url="URL" -e Region="region" Image_Name;
 Name - create name for your container
 URL - DB endpoint url. No default. Example: http://ip:container_port ;"http://localhost:8000" "http://172.17.0.3:8000"; ip - ip address of db container from previous step (first terminal);
-Region - AWS credentials region. Default "local". Example: "us-east-2"
-Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_db_init
+Region - AWS credentials region. Default "local". Example: "us-east-2".
+Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_init_create or :latest_init_load
 3. Start Db_service
 Build: 
 docker build -t Image_Name .

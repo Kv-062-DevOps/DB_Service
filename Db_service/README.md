@@ -11,4 +11,4 @@ To start Docker Image:
 * ip - ip address of db container from 1 step (first terminal);
 * Port - flask run port(server port), should be the same as container listening port. By default 8083. Example: "8083"
 * Region - AWS region wich specified in credentials. By default "local". Example "us-east-2".If set another than default it would break because we not set up credentials.
-* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_db_service
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db-service:latest-db-service

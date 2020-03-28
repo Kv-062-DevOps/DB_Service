@@ -24,7 +24,7 @@ Start init containers. First init_create to Create Table. Second init_load to lo
 ``` http://ip:container_port ``` ``` http://localhost:8000 ```  ``` http://172.17.0.3:8000 ``` 
 * ip - ip address of db container from previous step (first terminal) :)
 * Region - AWS credentials region. Default "local". Example: "us-east-2". If set another than default it would break because we not set up credentials.
-* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_init_create or :latest_init_load
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db-service:latest-init-create or :latest-init-load
 ____
 # 3. Start Db_service
 ____
@@ -39,5 +39,5 @@ To start Docker Image:
 * ip - ip address of db container from 1 step (first terminal);
 * Port - flask run port(server port), should be the same as container listening port. By default 8083. Example: "8083"
 * Region - AWS region wich specified in credentials. By default "local". Example "us-east-2".If set another than default it would break because we not set up credentials.
-* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_db_service
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db-service:latest-db-service
 

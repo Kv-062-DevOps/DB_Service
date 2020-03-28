@@ -10,4 +10,4 @@ Start init container
 ``` http://ip:container_port ``` ``` http://localhost:8000 ```  ``` http://172.17.0.3:8000 ``` 
 * ip - ip address of db container from previous step (first terminal) :)
 * Region - AWS credentials region. Default "local". Example: "us-east-2". If set another than default it would break because we not set up credentials.
-* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_init_create or :latest_init_load
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db-service:latest-init-create 

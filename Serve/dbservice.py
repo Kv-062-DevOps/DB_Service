@@ -6,7 +6,11 @@ import yaml
 import os
 from yaml import load, dump
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2', endpoint_url="http://localhost:5000") #os.environ['db_url'])
+dynamodb = boto3.resource('dynamodb',
+                          aws_access_key_id="anything",
+                          aws_secret_access_key="anything",
+                          region_name=os.environ['region'],
+                          endpoint_url=os.environ['db_url'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)
@@ -69,8 +73,6 @@ def add_employee():
     )
     resp = jsonify(success=True)
     return resp
-
-    
       
 if __name__ == '__main__':
-    app.run(port="8083")#os.environ['host_port'])
+    app.run(port=os.environ['host_port'])

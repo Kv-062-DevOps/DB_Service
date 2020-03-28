@@ -7,4 +7,4 @@ COPY requirements.txt .
 COPY create_table.py .
 RUN pip install -r requirements.txt
 
-CMD ["python3", "CreateTable.py"]
+CMD ["python3", "create_table.py"]

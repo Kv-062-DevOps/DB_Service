@@ -1,16 +1,21 @@
 from flask import Flask
-from flask import request, jsonify
+from flask import request,jsonify, url_for
+import os
 
 import boto3
+import json
+import decimal
 import yaml
-import os
 from yaml import load, dump
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-2', endpoint_url="http://localhost:5000") #os.environ['db_url'])
+dynamodb = boto3.resource('dynamodb',
+                          aws_access_key_id="anything",
+                          aws_secret_access_key="anything",
+                          region_name=os.environ['Region'],
+                          endpoint_url=os.environ['Db_url'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)
-
 @app.route('/')
 def index():
     return 'Index Page'
@@ -73,4 +78,4 @@ def add_employee():
     
       
 if __name__ == '__main__':
-    app.run(port="8083")#os.environ['host_port'])
+    app.run(port=os.environ['Server_port'])

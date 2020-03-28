@@ -1,32 +1,43 @@
-# DB_Service
-DynamoDB, Flask, Yaml, Python.
-Всем привет. Это мануал для локального запуска сервиса. 
-Первий шаг это запуск локальной DynamoDB и дальнейшего добавления в нее некой информации.
-Второй шаг это настройка и запуск Flask.
-А..Забыл...Скачайте себе даный репозиторий :)
+____
+# 1. Start DynamoDN;
+____
+Download image from Docker Hub.
+``` docker pull amazon/dynamodb-local ```
+Start DynamoDb container.
+``` docker run -p container_port:host_port amazon/dynamodb-local ```
+* Example: 
+``` docker run --name=DB -d -p 8000:8000 amazon/dynamodb-local ```
+Get know container IP address: 
+``` docker ps -l - container id ```
+``` docker inspect --format '{{ .NetworkSettings.IPAddress }}' container_id ```
+(new terminal)- for next step :)
+____
+# 2. Start DataBase initialization; First Db_init_create - create Table; Second Db_init_load - load data
+____
+Build from Dockerfile. Db_init_create directory or from Db_init_load.  
+``` docker build -t Image_Name . ```
+* Image_Name - create name for your image;
+Start init containers. First init_create to Create Table. Second init_load to load Data.
+``` docker run --name="Name" -e Db_url="URL" -e Region="region" Image_Name ```
+* Name - create name for your container
+* URL - DB endpoint url. No default. Example: 
+``` http://ip:container_port ``` ``` http://localhost:8000 ```  ``` http://172.17.0.3:8000 ``` 
+* ip - ip address of db container from previous step (first terminal) :)
+* Region - AWS credentials region. Default "local". Example: "us-east-2". If set another than default it would break because we not set up credentials.
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_init_create or :latest_init_load
+____
+# 3. Start Db_service
+____
+Build from Dockerfile. Db_service directory.
+``` docker build -t Image_Name . ```
+* Image_Name - give name for your image.
+To start Docker Image:
+ ```docker run -p container_port:host_port --name="Name" -e Db_url="URL" -e Server_port="Port" -e  Region="region" Image_Name ```
+* Name - give name to your container
+* URL - DB endpoint url. No default. Example: 
+``` http://ip:container_port ``` ``` http://localhost:8000 ``` ``` http://172.17.0.3:8000 ``` 
+* ip - ip address of db container from 1 step (first terminal);
+* Port - flask run port(server port), should be the same as container listening port. By default 8083. Example: "8083"
+* Region - AWS region wich specified in credentials. By default "local". Example "us-east-2".If set another than default it would break because we not set up credentials.
+* Image_Name - name wich you give while build or set up image name from Docker HUB vnikolayenko/db_service:latest_db_service
 
-0. Убедитесь что у вас есть все нужные модули: Boto3,YAML(pyyaml),Flask. Вы можете подгрузить все в виртуальной среде virtenv.
-1. Выполните все нужные шаги что указаны по даной ссылке:
-https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
-после запуска базы
-(открываем новый терминал)
-1. Перейдите в директорию с Python модулями DB_Python_modules и запустите там (python ...) CreateTable.py(создаем таблицу и ее структуру), LoadData.py(добавляем данные, которые находятся в файле LoadData.json). После чего можете проверить что вы добавили , запустив ScanItem.py. 
-----На этом этапе у вас есть база и некая ифнормация в ней.---
-2. Переходим в папку с проектом myproject_virtenv и запускаем hello.py. Таким образом мы запустили FLASK.
-после запуска FLASK сервера
-(открываем новый терминал)
-3. Тестим. Даный шаг можно провести при помощи команды curl или программы Postman для тестирования работоспособности даного сервиса. Вы конечно же можете сразу начать тестировать с помощью своих сервисов, но на всякий случай лучше пока так.
-  а) (curl)
-    curl -X GET http://localhost:5000/list - показать всех сотрдников (в формате YAML)
-    Для POST пока курла нет, но вы можете запустить POST сервис после чего прописать команду сверху, чтобы убедиться что сотрудник был      добавлен.  
-  б) (Postman)
-    GET          http://127.0.0.1:5000/list
-    Вы увидите список в формате YAML.
-    Для POST вы можете вставить данные в поле raw на вкладке BODY взяв с файла YAML, который находитс в дериктории myproject_virtenv.
-    -ИЛИ-
-    Воспользоваться своими сервисами и проверить на наличие добавленого сотрудника командой GET указаной выше.
-4. Донастройка с остальными сервисами
-4.1 POST 
-    a) go run main.go. После запуска откройте новый терминал.(кодирует в YAML и отправляет на сервис базы);
-    б) Переходим в папку  test_services и запускаем go run srv1sendjson.go.(отправляет тестовый JSON на main.go);
-    в) Тестим на созданого сотрудника (Либо как указано в 3 пункте либо при помощи Get сервиса);

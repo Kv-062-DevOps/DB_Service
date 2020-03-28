@@ -1,0 +1,6 @@
+- default_salary: '2000'
+emp_id: '1'
+experience: '2'
+first_name: Nikolaienko
+second_name: Vladyslav
+types: manager

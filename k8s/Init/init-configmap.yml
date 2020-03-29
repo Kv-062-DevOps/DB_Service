@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-db-init-config
+data:
+  db_url: http://db.default.svc.cluster.local:8000
+  region: "local"

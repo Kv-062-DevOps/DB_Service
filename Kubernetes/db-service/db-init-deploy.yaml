@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back
+spec:
+  selector:
+    matchLabels:
+      app: back
+  template:
+    metadata:
+      labels:
+        app: back
+    spec:
+      containers:
+      - image: vnikolayenko/db-service:latest-db-service
+        env:
+        - name: Db_url
+          value: "http://db:8000"
+        - name: Region
+          value: "local"
+        - name: Server_port
+          value: "8083"
+        ports:
+        - containerPort: 8083
+        name: db-service

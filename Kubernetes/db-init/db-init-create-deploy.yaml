@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dbinit-create
+  name: dbinit-create
+spec:
+  selector:
+    matchLabels:
+      app: dbinit-create
+  template:
+    metadata:
+      labels:
+        app: dbinit-create
+    spec:
+      containers:
+      - image: vnikolayenko/db-service:latest-init-create
+        env:
+          - name: Db_url
+            value: "http://db:8000"
+          - name: Region
+            value: "local"
+            ports:
+              - containerPort: 8086
+        name: db-init-create
+---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: dbinit-load
+    name: dbinit-load
+  spec:
+    selector:
+      matchLabels:
+        app: dbinit-load
+    template:
+      metadata:
+        labels:
+          app: dbinit-load
+      spec:
+        containers:
+        - image: vnikolayenko/db-service:latest-init-load
+          env:
+            - name: Db_url
+              value: "http://db:8000"
+            - name: Region
+              value: "local"
+              ports:
+                - containerPort: 8087
+          name: db-init-load
+  

@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: env-db-init-config
 data:
-  db_url: http://db.default.svc.cluster.local:8000
+  db_url: http://db-service:8000
   region: "local"

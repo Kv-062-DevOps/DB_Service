@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: back-service
+  name: db-service
   labels:
     app: flask
-    component: back
+    component: db
 spec:
   type: NodePort
   ports:
-    - port: 8083
-      protocol: TCP
-      targetPort: 8083
+  - port: 8000
+    protocol: TCP
+    targetPort: 8000
   selector:
     app: flask
-    component: back
+    component: db

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    app: flask
+    component: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+      component: db
+  template:
+    metadata:
+      name: db
+      labels:
+        app: flask
+        component: db
+    spec:
+      containers:
+      - image: amazon/dynamodb-local
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        name: db

@@ -13,13 +13,36 @@ spec:
     spec:
       containers:
       - image: vnikolayenko/db-service:latest-db-service
-        env:
-        - name: Db_url
-          value: "http://db:8000"
-        - name: Region
-          value: "local"
-        - name: Server_port
-          value: "8083"
-        ports:
-        - containerPort: 8083
+        envFrom:
+        - configMapRef:
+            name: db-config
         name: db-service
+      initContainers:
+      - image: vnikolayenko/db-service:latest-init-create
+        env:
+          - name: Db_url
+            valueFrom: 
+              configMapKeyRef:
+                name: db-config
+                key: Db_url
+          - name: Region
+            valueFrom:
+              configMapKeyRef:
+                name: db-config
+                key: Region
+        name: db-init-create
+      - image: vnikolayenko/db-service:latest-init-load
+        env:
+          - name: Db_url
+            valueFrom: 
+              configMapKeyRef:
+                name: db-config
+                key: Db_url
+          - name: Region
+            valueFrom:
+              configMapKeyRef:
+                name: db-config
+                key: Region
+        name: db-init-load
+
+

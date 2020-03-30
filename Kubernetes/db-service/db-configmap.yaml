@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: default
+data:
+  Db_url: "http://db:8000"
+  Region: "local"
+  Server_port: "8083"

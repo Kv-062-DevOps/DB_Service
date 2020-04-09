@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: docker_images
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    create:
+      name: create_db
+      runs-on: ubuntu-latest
+      steps:
+      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_init_create@master
+        with:
+          access_key_id: ${{ secrets.access_key_ecr }}
+          secret_access_key: ${{ secrets.secret_key_ecr }}
+          account_id: ${{ secrets.as_account_id }}
+          repo: 325377111666.dkr.ecr.us-west-2.amazonaws.com/docker_images
+          region: us-west-2
+          tags: latest_db_init_create
+          create_repo: false 
+    init:
+      needs: [create]
+      name: init_db
+      runs-on: ubuntu-latest
+      steps:
+      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_init_loade@master
+        with:
+          access_key_id: ${{ secrets.access_key_ecr }}
+          secret_access_key: ${{ secrets.secret_key_ecr }}
+          account_id: ${{ secrets.as_account_id }}
+          repo: 325377111666.dkr.ecr.us-west-2.amazonaws.com/docker_images
+          region: us-west-2
+          tags: latest_db_init_loade
+          create_repo: false
+    service:
+      needs: [create, init]
+      name: db_service
+      runs-on: ubuntu-latest
+      steps:
+      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_service@master
+        with:
+          access_key_id: ${{ secrets.access_key_ecr }}
+          secret_access_key: ${{ secrets.secret_key_ecr }}
+          account_id: ${{ secrets.as_account_id }}
+          repo: 325377111666.dkr.ecr.us-west-2.amazonaws.com/docker_images
+          region: us-west-2
+          tags: latest_db_service
+          create_repo: false  
+       

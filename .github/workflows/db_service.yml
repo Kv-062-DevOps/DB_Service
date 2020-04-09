@@ -16,7 +16,7 @@ jobs:
       name: create_db
       runs-on: ubuntu-latest
       steps:
-      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_init_create@master
+      - uses: Kv-062-DevOps/DB_Service/Docker/Db_init_create@master
         with:
           access_key_id: ${{ secrets.access_key_ecr }}
           secret_access_key: ${{ secrets.secret_key_ecr }}
@@ -30,7 +30,7 @@ jobs:
       name: init_db
       runs-on: ubuntu-latest
       steps:
-      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_init_loade@master
+      - uses: Kv-062-DevOps/DB_Service/Docker/Db_init_loade@master
         with:
           access_key_id: ${{ secrets.access_key_ecr }}
           secret_access_key: ${{ secrets.secret_key_ecr }}
@@ -44,7 +44,7 @@ jobs:
       name: db_service
       runs-on: ubuntu-latest
       steps:
-      - uses: vnikolayenko/Kv-062-DevOps/DB_Service/Docker/Db_service@master
+      - uses: Kv-062-DevOps/DB_Service/Docker/Db_service@master
         with:
           access_key_id: ${{ secrets.access_key_ecr }}
           secret_access_key: ${{ secrets.secret_key_ecr }}

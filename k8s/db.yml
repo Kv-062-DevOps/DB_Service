@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: default
+data:
+  Db_url: "http://db:8000"
+  Region: "local"
+  Server_port: "8083"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back
+spec:
+  selector:
+    matchLabels:
+      app: back
+  template:
+    metadata:
+      labels:
+        app: back
+    spec:
+      containers:
+      - image: vnikolayenko/db-service:latest-db-service
+        envFrom:
+        - configMapRef:
+            name: db-config
+        name: db-service
+      initContainers:
+      - image: vnikolayenko/db-service:latest-init-create
+        env:
+          - name: Db_url
+            valueFrom: 
+              configMapKeyRef:
+                name: db-config
+                key: Db_url
+          - name: Region
+            valueFrom:
+              configMapKeyRef:
+                name: db-config
+                key: Region
+        name: db-init-create
+      - image: vnikolayenko/db-service:latest-init-load
+        env:
+          - name: Db_url
+            valueFrom: 
+              configMapKeyRef:
+                name: db-config
+                key: Db_url
+          - name: Region
+            valueFrom:
+              configMapKeyRef:
+                name: db-config
+                key: Region
+        name: db-init-load
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: back
+  name: back-srv
+spec:
+    type: NodePort
+    ports:
+    - port: 8083
+      targetPort: 8083 
+    selector:
+      app: back
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: db
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - image: amazon/dynamodb-local
+        name: dynamodb-local
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+      app: db
+    name: db
+spec:
+    type: NodePort
+    ports:
+    - port: 8000
+      targetPort: 8000
+    selector:
+      app: db

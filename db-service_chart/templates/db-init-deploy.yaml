@@ -14,37 +14,11 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imageCredentials.name }}      
       containers:
-      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/db-service:b4995e84efd84bdc03f72611a0db88d6201bfac9
+      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/back:latest
         envFrom:
         - configMapRef:
             name: db-config
         name: db-service
-      initContainers:
-      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/db-create:b4995e84efd84bdc03f72611a0db88d6201bfac9
-        env:
-          - name: Db_url
-            valueFrom: 
-              configMapKeyRef:
-                name: db-config
-                key: Db_url
-          - name: Region
-            valueFrom:
-              configMapKeyRef:
-                name: db-config
-                key: Region
-        name: db-init-create
-      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/db-load:b4995e84efd84bdc03f72611a0db88d6201bfac9 
-        env:
-          - name: Db_url
-            valueFrom: 
-              configMapKeyRef:
-                name: db-config
-                key: Db_url
-          - name: Region
-            valueFrom:
-              configMapKeyRef:
-                name: db-config
-                key: Region
-        name: db-init-load
+      
 
 

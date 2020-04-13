@@ -6,5 +6,5 @@ ENV Access_key="anything"
 COPY requirements.txt .
 COPY db_service.py .
 RUN pip install -r requirements.txt
-EXPOSE ${Service_port}
+EXPOSE ${Server_port}
 CMD python db_service.py

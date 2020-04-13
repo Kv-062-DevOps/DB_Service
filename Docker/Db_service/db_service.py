@@ -11,8 +11,7 @@ from yaml import load, dump
 dynamodb = boto3.resource('dynamodb',
                           aws_access_key_id=os.environ['Access_key'],
                           aws_secret_access_key=os.environ['Secret_key'],
-                          region_name=os.environ['Region'],
-                          endpoint_url=os.environ['Db_url'])
+                          region_name=os.environ['Region'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)

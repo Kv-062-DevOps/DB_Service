@@ -4,7 +4,6 @@ metadata:
   name: db-config
   namespace: default
 data:
-  Db_url: "{{ .Values.Db_url }}"
   Region: "{{ .Values.Region }}"
   Server_port: "{{ .Values.Server_port }}"
   Secret_key: "{{ .Values.Secret_key }}"

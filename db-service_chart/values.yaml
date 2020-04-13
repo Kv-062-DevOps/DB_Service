@@ -73,8 +73,6 @@ targetPort: 8083
 
 typePort: NodePort
 
-Db_url: "http://db:8000"
-
 Region: "local"
 
 Server_port: "8083"

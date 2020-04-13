@@ -5,10 +5,10 @@ metadata:
     app: back
   name: back
 spec:
-    type: NodePort
+    type: {{ .Values.typePort}}
     ports:
-    - port: 8083
-      targetPort: 8083 
+    - port: {{ .Values.port }}
+      targetPort: {{ .Values.targetPort }}
     selector:
       app: back
     

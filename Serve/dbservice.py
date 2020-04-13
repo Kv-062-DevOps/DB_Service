@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, jsonify
+from flask import request, jsonify, url_for
 
 import boto3
 import yaml
@@ -7,10 +7,9 @@ import os
 from yaml import load, dump
 
 dynamodb = boto3.resource('dynamodb',
-                          aws_access_key_id="anything",
-                          aws_secret_access_key="anything",
-                          region_name=os.environ['region'],
-                          endpoint_url=os.environ['db_url'])
+                          aws_access_key_id=os.environ['access_key'],
+                          aws_secret_access_key=os.environ['secret_key'],
+                          region_name=os.environ['region'])
 table = dynamodb.Table('Employees')
 
 app = Flask(__name__)

@@ -5,9 +5,9 @@ metadata:
   name: db-config
   namespace: default
 data:
-  Db_url: "http://db:8000"
-  Region: "local"
-  Server_port: "8083"
+  db_url: "http://db:8000"
+  region: "local"
+  host_port: "8083"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,29 +31,29 @@ spec:
       initContainers:
       - image: vnikolayenko/db-service:latest-init-create
         env:
-          - name: Db_url
+          - name: db_url
             valueFrom: 
               configMapKeyRef:
                 name: db-config
-                key: Db_url
-          - name: Region
+                key: db_url
+          - name: region
             valueFrom:
               configMapKeyRef:
                 name: db-config
-                key: Region
+                key: region
         name: db-init-create
       - image: vnikolayenko/db-service:latest-init-load
         env:
-          - name: Db_url
+          - name: db_url
             valueFrom: 
               configMapKeyRef:
                 name: db-config
-                key: Db_url
-          - name: Region
+                key: db_url
+          - name: region
             valueFrom:
               configMapKeyRef:
                 name: db-config
-                key: Region
+                key: region
         name: db-init-load
 ---
 apiVersion: v1

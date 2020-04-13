@@ -1,10 +1,9 @@
-FROM python:3.8.2-alpine3.11
+FROM python:3.6-slim
 
 ENV host_port=8080
 WORKDIR /app
 
-COPY Serve/requirements.txt .
-COPY Serve/dbservice.py .
+COPY . .
 RUN pip install -r requirements.txt
 
 EXPOSE ${host_port}

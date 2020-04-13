@@ -1,4 +1,5 @@
 .git
+.gitignore
 __pycache__
 *.pyc
 *.pyo
@@ -7,3 +8,4 @@ __pycache__
 env
 Dockerfile
 README.md
+.DS_Store

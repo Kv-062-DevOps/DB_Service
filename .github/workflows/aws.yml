@@ -25,14 +25,14 @@
 
 on:
   push:
-    branches: [ master ]
+    branches: [ dynamodb_web ]
   pull_request:
-    branches: [ master ]
+    branches: [ dynamodb_web ]
 name: docker_images
 
 jobs:
   create:
-    name: create_db
+    name: create-back
     runs-on: ubuntu-latest
 
     steps:

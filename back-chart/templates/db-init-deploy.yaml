@@ -14,7 +14,7 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.imageCredentials.name }}      
       containers:
-      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/back:latest
+      - image: "325377111666.dkr.ecr.us-west-2.amazonaws.com/back:{{ .Values.Tag }}"
         envFrom:
         - configMapRef:
             name: db-config

@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: back
-  name: back
+  name: back-srv
 spec:
     type: {{ .Values.typePort}}
     ports:

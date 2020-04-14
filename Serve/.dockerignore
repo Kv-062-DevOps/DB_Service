@@ -9,3 +9,4 @@ env
 Dockerfile
 README.md
 .DS_Store
+.dockerignore

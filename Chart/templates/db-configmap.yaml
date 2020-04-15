@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: default
+data:
+  region: "{{ .Values.region }}"
+  host_port: "{{ .Values.host_port }}"
+  secret_key: "{{ .Values.secret_key }}"
+  access_key: "{{ .Values.access_key }}"

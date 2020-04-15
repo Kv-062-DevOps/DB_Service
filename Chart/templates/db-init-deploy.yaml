@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back
+spec:
+  selector:
+    matchLabels:
+      app: back
+  template:
+    metadata:
+      labels:
+        app: back
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.imageCredentials.name }}      
+      containers:
+      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/back:latest
+        envFrom:
+        - configMapRef:
+            name: db-config
+        name: db-service

@@ -1,10 +1,13 @@
-FROM python:3.8.2-alpine3.11
+FROM python:3.6-alpine as base
 
-ENV region="local"
+FROM base as builder
+WORKDIR /install
+COPY requirements.txt .
+RUN pip install --install-option="--prefix=/install" -r requirements.txt
+
+FROM base
+COPY --from=builder /install /usr/local
 WORKDIR /app
-
-COPY Init/requirements.txt .
-COPY Init/create_table.py .
-RUN pip install -r requirements.txt
+COPY create_table.py .
 
 CMD ["python3", "create_table.py"]

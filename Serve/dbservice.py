@@ -1,18 +1,60 @@
-from flask import Flask
+from flask import Flask, Response
 from flask import request, jsonify, url_for
 
+import prometheus_client
 import boto3
 import yaml
 import os
-from yaml import load, dump
+import time
 
 dynamodb = boto3.resource('dynamodb',
-                          aws_access_key_id=os.environ['access_key'],
-                          aws_secret_access_key=os.environ['secret_key'],
-                          region_name=os.environ['region'])
+                          aws_access_key_id=os.environ['Access_key'],
+                          aws_secret_access_key=os.environ['Secret_key'],
+                          region_name=os.environ['Region'])
 table = dynamodb.Table('Employees')
 
+# <PROMETHEUS>
+
+COUNT = prometheus_client.Counter(
+    'request_count', 'App Request Count',
+    ['app_name', 'method', 'endpoint', 'http_status']
+)
+
+LATENCY = prometheus_client.Histogram('request_latency_seconds', 'Request latency',
+                                      ['app_name', 'endpoint']
+                                      )
+
+content_type_latest = str('text/plain; version=0.0.4; charset=utf-8')
+
+
+def start_timer():
+    request.start_time = time.time()
+
+
+def stop_timer(response):
+    resp_time = time.time() - request.start_time
+    LATENCY.labels('dbservice', request.path).observe(resp_time)
+    return response
+
+
+def record_request_data(response):
+    COUNT.labels('dbservice', request.method, request.path,
+                 response.status_code).inc()
+    return response
+
+
+def setup_metrics(app):
+    app.before_request(start_timer)
+    # The order here matters since we want stop_timer
+    # to be executed first
+    app.after_request(record_request_data)
+    app.after_request(stop_timer)
+
+# </PROMETHEUS>
+
 app = Flask(__name__)
+
+setup_metrics(app)
 
 
 @app.route('/')
@@ -82,5 +124,10 @@ def add_employee():
     return resp
 
 
+@app.route('/metrics')
+def metrics():
+    return Response(prometheus_client.generate_latest(), mimetype=content_type_latest)
+
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=os.environ['host_port'], debug=True)
+    app.run(host="0.0.0.0", port=os.environ['Server_port'], debug=True)

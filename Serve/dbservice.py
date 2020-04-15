@@ -8,9 +8,9 @@ import os
 import time
 
 dynamodb = boto3.resource('dynamodb',
-                          aws_access_key_id=os.environ['Access_key'],
-                          aws_secret_access_key=os.environ['Secret_key'],
-                          region_name=os.environ['Region'])
+                          aws_access_key_id=os.environ['access_key'],
+                          aws_secret_access_key=os.environ['secret_key'],
+                          region_name=os.environ['region'])
 table = dynamodb.Table('Employees')
 
 # <PROMETHEUS>
@@ -130,4 +130,4 @@ def metrics():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=os.environ['Server_port'], debug=True)
+    app.run(host="0.0.0.0", port=os.environ['host_port'], debug=True)

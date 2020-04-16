@@ -32,8 +32,8 @@ resource "aws_dynamodb_table_item" "employee" {
 {
   "types": {"S": "manager"},
   "emp_id": {"S": "1"},
-  "first_name": {"S": "Vladislav"},
-  "second_name": {"S": "Nikolaienko"},
+  "first_name": {"S": "Yurii"},
+  "second_name": {"S": "Liaskovets"},
   "default_salary": {"S": "2000"},
   "experience": {"S": "1"}
 }

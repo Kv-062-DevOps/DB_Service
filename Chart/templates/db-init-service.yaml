@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: back
-  name: back-srv
+  name: back
 spec:
     type: {{ .Values.typePort}}
     ports:
@@ -11,4 +11,3 @@ spec:
       targetPort: {{ .Values.targetPort }}
     selector:
       app: back
-    

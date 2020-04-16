@@ -73,16 +73,15 @@ targetPort: 8083
 
 typePort: NodePort
 
-Region: "local"
+region: "local"
 
-Server_port: "8083"
+host_port: "8083"
 
-Secret_key: "anything"
-Access_key: "anything"
+secret_key: "anything"
+access_key: "anything"
 
-Tag: "latest"
 imageCredentials:
-  name: creden-name
-  registry: reg
-  username: user
-  password: pass
+  name: credentials-db-service-ecr
+  registry: 325377111666.dkr.ecr.us-west-2.amazonaws.com
+  username: ecr-console
+  password: ecr-password

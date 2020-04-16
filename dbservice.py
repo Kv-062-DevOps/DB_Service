@@ -3,6 +3,8 @@ from flask import request, jsonify, url_for
 
 import prometheus_client
 import boto3
+import json
+import decimal
 import yaml
 import os
 import time

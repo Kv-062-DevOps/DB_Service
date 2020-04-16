@@ -3,11 +3,11 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-name: back
+name: dbservice
 
 jobs:
   create:
-    name: create-back
+    name: build-dbservice
     runs-on: ubuntu-latest
 
     steps:
@@ -17,9 +17,9 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.aws_ecr_pub }}
-        aws-secret-access-key: ${{ secrets.aws_ecr_priv }}
-        aws-region: eu-west-2
+        aws-access-key-id: ${{ secrets.aws_ecr_central_pub }}
+        aws-secret-access-key: ${{ secrets.aws_ecr_central_priv }}
+        aws-region: eu-central-1
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -29,14 +29,12 @@ jobs:
       id: build-image-back
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: dbservice
+        ECR_REPOSITORY: nikitasadok
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"

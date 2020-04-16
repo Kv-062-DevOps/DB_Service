@@ -20,7 +20,6 @@ jobs:
         aws-access-key-id: ${{ secrets.aws_ecr_central_pub }}
         aws-secret-access-key: ${{ secrets.aws_ecr_central_priv }}
         aws-region: eu-central-1
-        repo: nikitasadok
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -28,14 +27,14 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image-back
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: dbservice
-        IMAGE_TAG: ${{ github.sha }}
+      env:      
+        ECR_REGISTRY: "074368059797.dkr.ecr.eu-central-1.amazonaws.com"
+        ECR_REPOSITORY: nikitasadok
+        IMAGE_TAG: stable
       run: |
-        # Build a docker container and
-        # push it to ECR so that it can
-        # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG"
+        
+
+        

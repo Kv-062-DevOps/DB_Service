@@ -15,7 +15,6 @@ ____
 * * 
 ``` helm install --set imageCredentials.registry=ecr-address --set imageCredentials.username=username-for-ecr --set imageCredentials.password=password-for-ecr --set region="dynamodb-region" --set secret_key="dynamodb-secret-key" --set access_key="dynamodb-access-key" --set tag="ecr-image-tag" helm-chart-specific-name ./helm-chart-dir ```
 * 6. Check for working. If you want, you can even set port for your service (check ./chart/values and ./chart/templates/...service.yaml)
-``` kubectl get all```
-```markdown
+``` kubectl get all``` &&
 ``` kubectl port-forward service/back-srv 8083:8083 ```
 * 7. Go to browser and enter "http://127.0.0.1:8083/list".

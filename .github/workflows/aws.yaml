@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 name: dbservice
 
 jobs:
@@ -11,30 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.aws_ecr_central_pub }}
-        aws-secret-access-key: ${{ secrets.aws_ecr_central_priv }}
-        aws-region: eu-central-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.aws_ecr_central_pub }}
+          aws-secret-access-key: ${{ secrets.aws_ecr_central_priv }}
+          aws-region: eu-central-1
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
-      id: build-image-back
-      env:      
-        ECR_REGISTRY: "074368059797.dkr.ecr.eu-central-1.amazonaws.com"
-        ECR_REPOSITORY: nikitasadok
-        IMAGE_TAG: stable
-      run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG"
-        
-
-        
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image-back
+        env:
+          ECR_REGISTRY: "074368059797.dkr.ecr.eu-central-1.amazonaws.com"
+          ECR_REPOSITORY: nikitasadok
+          IMAGE_TAG: stable
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG"

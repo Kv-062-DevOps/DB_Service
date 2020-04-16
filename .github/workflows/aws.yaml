@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [ docker ]
+    branches: [ master ]
   pull_request:
-    branches: [ docker ]
+    branches: [ master ]
 name: back
 
 jobs:

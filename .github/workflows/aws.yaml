@@ -28,10 +28,12 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image-back
         env:
-          ECR_REGISTRY: "074368059797.dkr.ecr.eu-central-1.amazonaws.com"
-          ECR_REPOSITORY: nikitasadok
-          IMAGE_TAG: stable
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: back
+          IMAGE_TAG: ${{ github.run_id }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:back-latest .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:back-latest
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:back-$IMAGE_TAG"
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:back-latest"

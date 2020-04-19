@@ -80,8 +80,7 @@ host_port: "8083"
 secret_key: "anything"
 access_key: "anything"
 
-imageCredentials:
-  name: credentials-db-service-ecr
-  registry: 325377111666.dkr.ecr.us-west-2.amazonaws.com
-  username: ecr-console
-  password: ecr-password
+secretFile: "awsecr-cred"
+
+registry: "074368059797.dkr.ecr.eu-central-1.amazonaws.com/back"
+tag: "latest"

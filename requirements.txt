@@ -1,8 +1,4 @@
 Flask
 boto3
 PyYAML
-<<<<<<< HEAD
 prometheus_client
-=======
-prometheus_client
->>>>>>> b3ce8ef15ea9ae85c641c8ede56b2d58855dab11

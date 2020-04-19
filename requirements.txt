@@ -2,3 +2,4 @@ Flask==1.1.1
 boto3==1.12.39
 PyYAML==5.3.1
 prometheus_client==0.7.1
+python-dateutil==2.7.*

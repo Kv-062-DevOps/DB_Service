@@ -13,11 +13,11 @@ jobs:
         helm: helm3      
         # Task remove means to remove the helm release.
         task: 'remove'
-        release: 'review-back-${{ github.event.pull_request.number }}'
+        release: 'back-${{ github.event.pull_request.number }}'
         version: '${{ github.sha }}'
         track: 'stable'
         chart: './Chart'
-        namespace: 'back'
+        namespace: 'default'
         token: '${{ github.token }}'
       env:
         KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

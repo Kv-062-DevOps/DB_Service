@@ -1,9 +1,9 @@
 on:
   push:
-    branches: [master]
+    branches: [ingress]
   pull_request:
-    branches: [master]
-name: dbservice
+    branches: [ingress]
+name: ingress
 
 jobs:
   create:

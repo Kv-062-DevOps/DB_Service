@@ -1,13 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: {{ include "back.fullname" . }}-srv
+  namespace: default
   labels:
-    app: back
-  name: back
+    {{- include "back.labels" . | nindent 4 }}
 spec:
-    type: {{ .Values.typePort}}
-    ports:
-    - port: {{ .Values.port }}
-      targetPort: {{ .Values.targetPort }}
-    selector:
-      app: back
+  type: {{ .Values.typePort }}
+  ports:
+  - port: {{ .Values.port }}
+    targetPort: {{ .Values.targetPort }}
+  selector:
+    {{- include "back.selectorLabels" . | nindent 4 }}

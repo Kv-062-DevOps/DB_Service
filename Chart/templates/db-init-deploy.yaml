@@ -1,21 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: back
+  name: {{ include "back.fullname" . }}
+  namespace: default
 spec:
   selector:
     matchLabels:
-      app: back
+      {{- include "back.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: back
+        {{- include "back.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-      - name: {{ Values.secretFile }}      
+      - name: {{ .Values.secretFile }}
       containers:
-      - image: "{{ Values.registry}}:{{ Values.tag }}"
+      - image: "{{ .Values.registry }}:{{ .Values.tag }}"
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ .Values.host_port }}
+            protocol: TCP
+            name: http
         envFrom:
         - configMapRef:
-            name: db-config
-        name: db-service
+            name: {{ include "back.fullname" . }}-config
+        name: {{ include "back.fullname" . }}

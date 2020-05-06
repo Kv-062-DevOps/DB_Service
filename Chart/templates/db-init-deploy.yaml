@@ -4,6 +4,7 @@ metadata:
   name: {{ include "back.fullname" . }}
   namespace: default
 spec:
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "back.selectorLabels" . | nindent 6 }}

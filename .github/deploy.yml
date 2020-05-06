@@ -8,7 +8,7 @@ canary:
   payload:
     helm: helm3
     value_files: ["./config/production.yml", "./config/_common.yml"]
-    release: back-canary
+    release: back-
     namespace: default
     track: canary
     values: |

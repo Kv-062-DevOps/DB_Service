@@ -32,8 +32,10 @@ jobs:
           ECR_REPOSITORY: back
           IMAGE_TAG: ${{ github.run_id }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:v1 .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+           docker push $ECR_REGISTRY/$ECR_REPOSITORY:v1
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:latest"
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:v1"

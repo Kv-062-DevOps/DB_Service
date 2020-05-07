@@ -1,6 +1,0 @@
-env:
-- name: ENVIRONMENT
-  value: staging
-region: 'us-west-2'
-access_key: '${{ secrets.db_access_key }}'
-secret_key: '${{ secrets.db_secret_key }}'

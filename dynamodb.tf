@@ -25,9 +25,9 @@ resource "aws_dynamodb_table" "employee" {
   }
 }
 resource "aws_dynamodb_table_item" "employee" {
-  table_name = "${aws_dynamodb_table.employee.name}"
-  hash_key   = "${aws_dynamodb_table.employee.hash_key}"
-  range_key  = "${aws_dynamodb_table.employee.range_key}"
+  table_name = "aws_dynamodb_table.employee.name"
+  hash_key   = "aws_dynamodb_table.employee.hash_key"
+  range_key  = "aws_dynamodb_table.employee.range_key"
   item       = <<ITEMS
 {
   "types": {"S": "manager"},

@@ -1,21 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: back
+  name: {{ include "back.fullname" . }}
+  namespace: default
 spec:
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: back
+      {{- include "back.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: back
+        {{- include "back.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-      - name: {{ .Values.imageCredentials.name }}      
+      - name: {{ .Values.secretFile }}
       containers:
-      - image: 325377111666.dkr.ecr.us-west-2.amazonaws.com/back:latest
+      - image: "{{ .Values.registry }}:{{ .Values.tag }}"
+        imagePullPolicy: Always
+        ports:
+          - containerPort: {{ .Values.host_port }}
+            protocol: TCP
+            name: http
         envFrom:
         - configMapRef:
-            name: db-config
-        name: db-service
+            name: {{ include "back.fullname" . }}-config
+        name: {{ include "back.fullname" . }}

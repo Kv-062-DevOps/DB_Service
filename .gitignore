@@ -2,3 +2,5 @@ env/
 .DS_Store
 *.swp
 .vscode/
+*.tfstate
+.terraform/

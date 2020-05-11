@@ -8,7 +8,8 @@ canary:
   payload:
     helm: helm3
     value_files: ["./config/production.yml", "./config/_common.yml"]
-    release: back-
+    #release: back-
+    release: back
     namespace: default
     track: canary
     values: |
@@ -27,7 +28,8 @@ production:
     value_files: ["./config/production.yml", "./config/_common.yml"]
     # Remove the canary deployment if it exists when doing a full prod deploy.
     remove_canary: true
-    release: back-production
+    #release: back-production
+    release: back
     namespace: default
     track: stable
     values: |
@@ -42,7 +44,8 @@ staging:
   payload:
     helm: helm3
     value_files: ["./config/staging.yml", "./config/_common.yml"]
-    release: back-staging
+    #release: back-staging
+    release: back
     namespace: default
     track: stable
     values: |
